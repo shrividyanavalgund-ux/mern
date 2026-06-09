@@ -1,0 +1,4 @@
+# Personal teaching docs — kept local, not shared in the student repo
+docs/
+.DS_Store
+istio-*/
