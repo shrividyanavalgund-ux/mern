@@ -41,11 +41,11 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                dir('frontend') { 
+                // dir('frontend') { 
                     script {
                         image = docker.build("${IMAGE}:${IMAGE_TAG}", ".")
                     }
-                }
+                // }
             }
         }
 
@@ -63,6 +63,7 @@ pipeline {
             }
             steps {
                 sh '''
+                    echo ${IMAGE}
                     aws ecr get-login-password --region ${AWS_REGION} \
                       | docker login --username AWS --password-stdin ${REGISTRY}
                     docker push ${IMAGE}:${IMAGE_TAG}
