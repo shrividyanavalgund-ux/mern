@@ -41,10 +41,10 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                // dir('frontend') { 
+                dir('frontend') { 
                     script {
                         image = docker.build("${IMAGE}:${IMAGE_TAG}", ".")
-                    // }
+                    }
                 }
             }
         }
@@ -70,19 +70,19 @@ pipeline {
             }
         }
 
-        stage('Helm Deploy') {
-            steps {
-                withCredentials([file(credentialsId: 'kubeconfig-file', variable: 'KUBECONFIG')]) {
-                    sh '''
-                        helm upgrade --install frontend ./CICD/deploy/helm/frontend \
-                        --namespace frontend \
-                        --create-namespace \
-                        --set image.repository=$IMAGE \
-                        --set image.tag=$IMAGE_TAG
-                    '''
-                }
-            }
-        }
+        // stage('Helm Deploy') {
+        //     steps {
+        //         withCredentials([file(credentialsId: 'kubeconfig-file', variable: 'KUBECONFIG')]) {
+        //             sh '''
+        //                 helm upgrade --install frontend ./CICD/deploy/helm/frontend \
+        //                 --namespace frontend \
+        //                 --create-namespace \
+        //                 --set image.repository=$IMAGE \
+        //                 --set image.tag=$IMAGE_TAG
+        //             '''
+        //         }
+        //     }
+        // }
     }
 
 }
