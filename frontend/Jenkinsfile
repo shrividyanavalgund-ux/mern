@@ -44,7 +44,7 @@ pipeline {
                 // dir('frontend') { 
                     script {
                         image = docker.build("${IMAGE}:${IMAGE_TAG}", ".")
-                        sh "${IMAGE}"
+                        sh "pwd"
                     }
                 // }
             }
