@@ -13,11 +13,11 @@ pipeline {
     environment {
         SONAR_HOST_URL  = "http://13.235.42.215:9000"
         
-        REGISTRY        = "637423622313.dkr.ecr.ap-south-1.amazonaws.com"
-        IMAGE           = "637423622313.dkr.ecr.ap-south-1.amazonaws.com/mern-frontend"
+        REGISTRY        = "095192198230.dkr.ecr.eu-north-1.amazonaws.com"
+        IMAGE           = "095192198230.dkr.ecr.eu-north-1.amazonaws.com/mern-frontend"
         IMAGE_TAG       = "${env.BUILD_NUMBER}"
 
-        AWS_REGION      = "ap-south-1"
+        AWS_REGION      = "eu-north-1"
 
     }
 
@@ -42,7 +42,6 @@ pipeline {
         stage('Docker Build') {
             steps {
                 dir('frontend') { 
-                    sh 'ls -lrt'                    // current workspace
                     script {
                         image = docker.build("${IMAGE}:${IMAGE_TAG}", ".")
                     }
@@ -75,6 +74,7 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig-file', variable: 'KUBECONFIG')]) {
                     sh '''
+                        pwd
                         helm upgrade --install frontend ./CICD/deploy/helm/frontend \
                         --namespace frontend \
                         --create-namespace \
