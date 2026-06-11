@@ -42,6 +42,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 dir('frontend') { 
+                    sh 'ls -lrt'                    // current workspace
                     script {
                         image = docker.build("${IMAGE}:${IMAGE_TAG}", ".")
                     }
